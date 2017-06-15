@@ -1,0 +1,18 @@
+# /etc/modules: kernel modules to load at boot time.
+#
+# This file contains the names of kernel modules that should be loaded
+# at boot time, one per line. Lines beginning with "#" are ignored.
+
+tcp_bbr
+
+# If these aren't preloaded, then iptables fails to load and our
+# primary interface does not come up as a result? Interesting...
+br_netfilter
+iptable_filter
+iptable_mangle
+iptable_nat
+
+xt_CLASSIFY
+ipt_MASQUERADE
+ipt_REJECT
+

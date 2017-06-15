@@ -1,0 +1,9 @@
+[Unit]
+Description=Kill bluetooth radio
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/rfkill block bluetooth
+
+[Install]
+WantedBy=multi-user.target

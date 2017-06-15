@@ -1,0 +1,14 @@
+[Unit]
+Description=Disable interrupt coalescing for %i
+ConditionPathExists=!/tmp/%i.disabled-coalescing
+Requires=network.target
+After=network.target
+
+[Service]
+ExecStartPre=/usr/bin/touch /tmp/%i.disabled-coalescing
+ExecStart=/sbin/ethtool -C %i rx-usecs 0 tx-usecs 0
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target
+

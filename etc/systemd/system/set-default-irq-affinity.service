@@ -1,0 +1,9 @@
+[Unit]
+Description=Set default IRQ affinity
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/set_default_irq_affinity
+
+[Install]
+WantedBy=multi-user.target

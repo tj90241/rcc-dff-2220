@@ -1,0 +1,4 @@
+#!/bin/dash
+
+iptables-restore < /etc/iptables.rules
+

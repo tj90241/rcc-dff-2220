@@ -1,0 +1,32 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interfaces
+allow-hotplug enp0s20f0
+iface enp0s20f0 inet dhcp
+
+# The internal network interfaces
+allow-hotplug enp0s20f1
+iface enp0s20f1 inet manual
+allow-hotplug wlp1s0
+iface wlp2s0 inet manual
+
+# The internal network bridge interface
+auto br0 br0:0
+iface br0 inet static
+	bridge_ports enp0s20f1 wlp1s0
+	address 10.0.0.1
+	netmask 255.0.0.0
+	network 10.0.0.0
+
+iface br0:0 inet static
+	address 172.16.0.1
+	netmask 255.240.0.0
+	network 172.16.0.0
+

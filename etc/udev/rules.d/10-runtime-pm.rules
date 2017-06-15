@@ -1,0 +1,11 @@
+SUBSYSTEM!="pci", GOTO="power_runtime_rules_end"
+ACTION!="add", GOTO="power_runtime_rules_end"
+
+# If runtime-pm is enabled for either NIC, then lots of funny
+# things start happening: DHCP fails, reboots hang, etc...?
+KERNEL=="0000:00:14.0", GOTO="power_runtime_rules_end" # enp0s20f0
+KERNEL=="0000:00:14.1", GOTO="power_runtime_rules_end" # enp0s20f1
+ATTR{power/control}="*", ATTR{power/control}="auto"
+
+LABEL="power_runtime_rules_end"
+

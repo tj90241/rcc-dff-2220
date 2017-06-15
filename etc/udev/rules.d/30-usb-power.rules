@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="usb", KERNEL=="*-*.*", ATTR{power/control}="auto"
+

@@ -1,0 +1,64 @@
+*mangle
+
+# Classify important TCP packets as 1:10
+-A POSTROUTING -o enp0s20f0 -p tcp --syn -m length --length 40:68 -j CLASSIFY --set-class 1:10
+-A POSTROUTING -o enp0s20f0 -p tcp --tcp-flags ALL SYN,ACK -m length --length 40:68 -j CLASSIFY --set-class 1:10
+-A POSTROUTING -o enp0s20f0 -p tcp --tcp-flags ALL ACK -m length --length 40:100 -j CLASSIFY --set-class 1:10
+-A POSTROUTING -o enp0s20f0 -p tcp --tcp-flags ALL RST -j CLASSIFY --set-class 1:10
+-A POSTROUTING -o enp0s20f0 -p tcp --tcp-flags ALL ACK,RST -j CLASSIFY --set-class 1:10
+-A POSTROUTING -o enp0s20f0 -p tcp --tcp-flags ALL ACK,FIN -j CLASSIFY --set-class 1:10
+
+# Classify some critical latency-oriented services as 1:10
+-A POSTROUTING -o enp0s20f0 -p udp --dport domain -j CLASSIFY --set-class 1:10
+-A POSTROUTING -o enp0s20f0 -p udp --dport ntp -j CLASSIFY --set-class 1:10
+
+COMMIT
+
+*nat
+
+# Install a NAT on enp0s20f0
+-A POSTROUTING -o enp0s20f0 -j MASQUERADE
+
+COMMIT
+
+*filter
+
+# Allows all loopback (lo0) traffic and drop all traffic to 127/8 that doesn't use lo0
+-A INPUT -i lo -j ACCEPT
+-A INPUT ! -i lo -d 127.0.0.0/8 -j REJECT
+
+# Accepts all established inbound connections from the outside
+-A INPUT -i enp0s20f0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -i br0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Forwards all established inbound connections through the NAT
+# Forwards all and any outbound connections through the NAT
+-A FORWARD -i enp0s20f0 -o br0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -i br0 -o enp0s20f0 -j ACCEPT
+
+# Allows all outbound traffic
+-A OUTPUT -j ACCEPT
+
+# Allows DNS, DHCP, and NTP connections from the inside
+-A INPUT -i br0 -p udp --dport 53 -j ACCEPT
+-A INPUT -i br0 -p udp --dport 67 -j ACCEPT
+-A INPUT -i br0 -p udp --dport 123 -j ACCEPT
+
+# Open 68 on the outside so we can DHCP with the modem
+-A INPUT -i enp0s20f0 -p udp --dport 68 -j ACCEPT
+
+# Allows SSH connections from the inside
+-A INPUT -i br0 -p tcp -m state --state NEW --dport 22 -j ACCEPT
+
+# Allows DNS connections from the inside
+-A INPUT -i br0 -p tcp -m state --state NEW --dport 53 -j ACCEPT
+
+# Allow ICMP pings on any interface
+-A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+
+# Reject all other inbound - default deny unless explicitly allowed policy:
+-A INPUT -j DROP
+-A FORWARD -j DROP
+
+COMMIT
+

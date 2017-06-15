@@ -1,0 +1,8 @@
+#!/bin/dash
+
+echo 1 > /proc/irq/default_smp_affinity || true
+
+for i in `/usr/bin/find /proc/irq -maxdepth 1 -mindepth 1 -type d`; do
+	echo 1 > "${i}/smp_affinity" 2>&1 1>/dev/null || true
+done
+

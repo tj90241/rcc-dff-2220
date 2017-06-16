@@ -1,6 +1,11 @@
 SUBSYSTEM!="pci", GOTO="power_runtime_rules_end"
 ACTION!="add", GOTO="power_runtime_rules_end"
 
+# If runtime-pm is enabled for the WiFi radio, then it will crash
+# with firmware errors occasionally. We aggressively disable most
+# power-savings settings on it anyways.
+KERNEL=="0000:01:00.0", GOTO="power_runtime_rules_end" # wlp2s0
+
 # If runtime-pm is enabled for either NIC, then lots of funny
 # things start happening: DHCP fails, reboots hang, etc...?
 KERNEL=="0000:00:14.0", GOTO="power_runtime_rules_end" # enp0s20f0

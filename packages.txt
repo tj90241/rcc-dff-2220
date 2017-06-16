@@ -13,6 +13,7 @@ htop
 intel-microcode
 isc-dhcp-server
 iw
+jq
 linux-image-amd64
 linux-tools
 lldpd
@@ -21,6 +22,7 @@ nmap
 ntp
 powertop
 rfkill
+salt-master
 sudo
 traceroute
 unattended-upgrades

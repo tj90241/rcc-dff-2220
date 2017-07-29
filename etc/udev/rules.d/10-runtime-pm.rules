@@ -10,7 +10,7 @@ KERNEL=="0000:01:00.0", GOTO="power_runtime_rules_end" # wlp2s0
 # things start happening: DHCP fails, reboots hang, etc...?
 KERNEL=="0000:00:14.0", GOTO="power_runtime_rules_end" # enp0s20f0
 KERNEL=="0000:00:14.1", GOTO="power_runtime_rules_end" # enp0s20f1
-ATTR{power/control}="*", ATTR{power/control}="auto"
+ATTR{power/control}="*", ATTR{power/control}="on"
 
 LABEL="power_runtime_rules_end"
 

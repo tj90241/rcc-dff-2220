@@ -12,12 +12,17 @@ setup. You're on your own for those two services!
 Additional Hardware
 ===================
 I bought an Intel 7260 802.11ac Dual-Band WiFI mini-PCIe card. It has some
-limitations (20MHz band only in AP mode, etc.) that might bother some people,
-but it works fine for me.
+limitations (2.4GHz band only in AP mode, etc.) that might bother some people,
+but it works fine for me. I needed a half-to-full size mini-PCIe bracket to
+properly mount the card.
 
-I needed a half-to-full size mini-PCIe bracket to properly mount the card.
+Unfortunately, the firmware packaged with Debian (firmware-iwlwifi) is buggy.
+Version 17.352738.0 of the wireless firmware has a bug that will cause the
+radio to drop periodically without notice. Use version 17.459231.0.
 
-I also added a 128GB Samsung CM871a M.2 SSD for additional storage.
+I also added a 128GB Samsung CM871a M.2 SSD for additional storage. It is not
+a perfect fix and required me to saw off a fraction of the PCB, but it works
+fine...
 
 Netgate Customer Support
 ========================

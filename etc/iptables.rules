@@ -16,6 +16,10 @@ COMMIT
 
 *nat
 
+# Route SSH/git connections to the git domain
+-A PREROUTING -i enp0s20f0 -p tcp -m tcp --dport ssh -j DNAT --to 10.0.2.5
+-A PREROUTING -i enp0s20f0 -p tcp -m tcp --dport git -j DNAT --to 10.0.2.5
+
 # Install a NAT on enp0s20f0
 -A POSTROUTING -o enp0s20f0 -j MASQUERADE
 
@@ -47,8 +51,12 @@ COMMIT
 # Open 68 on the outside so we can DHCP with the modem
 -A INPUT -i enp0s20f0 -p udp --dport 68 -j ACCEPT
 
-# Allows SSH connections from both the inside and outside
--A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
+# Allows SSH connections from the inside
+-A INPUT -i br0 -p tcp -m state --state NEW --dport ssh -j ACCEPT
+
+# Forward SSH/git connections to the git domain
+-A FORWARD -i enp0s20f0 -p tcp -d 10.0.2.5 -m state --state NEW --dport ssh -j ACCEPT
+-A FORWARD -i enp0s20f0 -p tcp -d 10.0.2.5 -m state --state NEW --dport git -j ACCEPT
 
 # Allows DNS connections from the inside
 -A INPUT -i br0 -p tcp -m state --state NEW --dport 53 -j ACCEPT

@@ -3,6 +3,7 @@ base:
     - apt
     - kmods
     - minion
+    - ssh
     - sysctl
 
   'dhcp*':

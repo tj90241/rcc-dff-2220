@@ -1,3 +1,5 @@
+{% import_yaml 'apt/reboot-times.yaml' as reboottimesmap %}
+
 // Unattended-Upgrade::Origins-Pattern controls which packages are
 // upgraded.
 //
@@ -24,10 +26,10 @@ Unattended-Upgrade::Origins-Pattern {
         // Codename based matching:
         // This will follow the migration of a release through different
         // archives (e.g. from testing to stable and later oldstable).
-        "o=Debian,n=stretch";
-//      "o=Debian,n=jessie-updates";
-//      "o=Debian,n=jessie-proposed-updates";
-//      "o=Debian,n=jessie,l=Debian-Security";
+        "o=Debian,n={{ grains['oscodename'] }}";
+        "o=Debian,n={{ grains['oscodename'] }}-updates";
+        "o=Debian,n={{ grains['oscodename'] }}-proposed-updates";
+        "o=Debian,n={{ grains['oscodename'] }},l=Debian-Security";
 
         // Archive or Suite based matching:
         // Note that this will silently match a different release after
@@ -88,7 +90,7 @@ Unattended-Upgrade::Automatic-Reboot-WithUsers "true";
 // If automatic reboot is enabled and needed, reboot at the specific
 // time instead of immediately
 //  Default: "now"
-Unattended-Upgrade::Automatic-Reboot-Time "03:00";
+Unattended-Upgrade::Automatic-Reboot-Time "{{ salt['grains.filter_by'](reboottimesmap, grain='host') }}";
 
 // Use apt bandwidth limit feature, this example limits the download
 // speed to 70kb/sec

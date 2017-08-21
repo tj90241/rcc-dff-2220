@@ -1,0 +1,6 @@
+service:
+  - floppy
+  - parport
+  - pcspkr
+  - psmouse
+

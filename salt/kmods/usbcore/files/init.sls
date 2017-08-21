@@ -1,0 +1,2 @@
+options usbcore autosuspend=1
+

@@ -1,6 +1,5 @@
 tasksel install standard
 
-bind9
 bridge-utils
 bsd-mailx
 dnsutils
@@ -11,21 +10,21 @@ git
 hostapd
 htop
 intel-microcode
-isc-dhcp-server
 iw
 jq
+libvirt-daemon
 linux-image-amd64
 linux-tools
 lldpd
 lm-sensors
 nmap
-ntp
 powertop
+qemu-kvm
+qemu-utils
 rfkill
-salt-master
 sudo
 traceroute
-unattended-upgrades
-util-linux-locales
+util-linux
 vim
+virtinst
 

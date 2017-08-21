@@ -5,9 +5,10 @@ The RCC-DFF 2220 is a small, open Intel Rangely platform.
 This repository has lots of configuration bits/notes as to how you can
 configure it as a very low-power, high-performance, open router.
 
-I did not include any of my DNS (bind9) or DHCP (isc-dhcp-server)
-configuration as I did not want to leak too much information about my
-setup. You're on your own for those two services!
+I personally use SaltStack and libvirt to isolate core services (DNS, DHCP,
+NTP) and nice-to-haves (a git daemon) into multiple security domains. I've
+included as much configuration as possible without leaking too much info
+about my particular setup.
 
 Additional Hardware
 ===================

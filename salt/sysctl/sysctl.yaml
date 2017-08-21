@@ -1,0 +1,22 @@
+service:
+  fs.file-max: 4096
+  kernel.domainname: stachecki.int
+  kernel.pid_max: 512
+  vm.swappiness: 10
+
+yoshi:
+  fs.file-max: 4096
+  kernel.domainname: stachecki.int
+  kernel.pid_max: 512
+  net.bridge.bridge-nf-call-iptables: 0
+  net.core.default_qdisc: fq
+  net.core.rmem_max: 67108864
+  net.core.wmem_max: 67108864
+  net.ipv4.tcp_congestion_control: bbr
+  net.ipv4.tcp_rmem: 4096 87380 33554432
+  net.ipv4.tcp_wmem: 4096 65536 33554432
+  vm.dirty_writeback_centisecs: 1500
+  vm.hugetlb_shm_group: 115
+  vm.laptop_mode: 5
+  vm.swappiness: 0
+
